@@ -2,7 +2,7 @@
 
 require 'vendor/autoload.php';
 
-!defined('BASE_PATH') && define('BASE_PATH', dirname(__FILE__));
+!defined('BASE_PATH') && define('BASE_PATH', dirname(__DIR__, 1));
 
 $application = new \Symfony\Component\Console\Application();
 $config = new \Rebuild\Config\ConfigFactory();
