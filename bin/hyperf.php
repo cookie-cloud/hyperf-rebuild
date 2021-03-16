@@ -1,17 +1,21 @@
 <?php
 
+use Rebuild\Command\StartCommand;
+use Rebuild\Config\ConfigFactory;
+use Symfony\Component\Console\Application;
+
 require 'vendor/autoload.php';
 
-!defined('BASE_PATH') && define('BASE_PATH', dirname(__DIR__, 1));
+!defined('BASE_PATH') && define('BASE_PATH', dirname(__FILE__));
 
-$application = new \Symfony\Component\Console\Application();
-$config = new \Rebuild\Config\ConfigFactory();
+$application = new Application();
+$config = new ConfigFactory();
 $config = $config();
 
 $commands = $config->get('commands');
 foreach ($commands as $command) {
-    if ($command === \Rebuild\Command\StartCommand::class) {
-        $application->add(new \Rebuild\Command\StartCommand($config));
+    if ($command === StartCommand::class) {
+        $application->add(new StartCommand($config));
     } else {
         $application->add(new $command);
     }

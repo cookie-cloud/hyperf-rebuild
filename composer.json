@@ -11,7 +11,9 @@
         "symfony/console": "^4.4",
         "symfony/finder": "^5.2",
         "hyperf/http-message": "^2.1",
-        "nikic/fast-route": "^1.3"
+        "nikic/fast-route": "^1.3",
+        "psr/http-server-middleware": "^1.0",
+        "ext-http": "*"
     },
     "autoload": {
         "psr-4": {

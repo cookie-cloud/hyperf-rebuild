@@ -4,6 +4,7 @@
 namespace Rebuild\Server;
 
 
+use Rebuild\HttpServer\Route\DispatcherFactory;
 use Swoole\Server as SwooleServer;
 use Swoole\Http\Server as SwooleHttpServer;
 
@@ -44,8 +45,15 @@ class Server implements ServerInterface
     {
         foreach ($callbacks as $event => $callback) {
             [$class, $method] = $callback;
-            $instance = new $class();
+            if ($class === \Rebuild\HttpServer\Server::class) {
+                $instance = new $class(new DispatcherFactory());
+            } else {
+                $instance = new $class();
+            }
             $this->server->on($event, [$instance, $method]);
+            if (method_exists($instance, 'initCoreMiddleware')) {
+                $instance->initCoreMiddleware();
+            }
         }
     }
 }
